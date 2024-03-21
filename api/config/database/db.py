@@ -1,8 +1,16 @@
+import os
 import firebase_admin
-from firebase_admin import firestore
-from firebase_admin import credentials
+from firebase_admin import firestore, credentials
 
-cred = credentials.Certificate("cred.json")
-firebase_admin.initialize_app(cred)
+def get_db():
+  current_dir = os.path.dirname(os.path.abspath(__file__))
+  cred_path = os.path.join(current_dir, 'cred.json')
 
-db = firestore.client()
+  cred = credentials.Certificate(cred_path)
+  firebase_admin.initialize_app(cred)
+
+  db = firestore.client()
+
+  print(db)
+
+  return firestore.client()
