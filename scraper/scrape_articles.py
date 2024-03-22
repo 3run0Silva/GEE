@@ -2,6 +2,9 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
+import time
+from datetime import datetime
+
 # Selenium
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -10,14 +13,13 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-import time
-
 # Chrome
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Firestore
-from api.config.database.db import db
+from api.config.database.db import get_db
 
+db = get_db()
 
 # Chromedriver
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -36,7 +38,8 @@ articles = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "art
 
 def process_articles(articles, all_data):
   for article in articles[:10]:
-    event_data = {}
+    img = title = description = tag = ''
+    
 
     #Img Scraper
     try:
@@ -56,8 +59,26 @@ def process_articles(articles, all_data):
     try:
       date_element = article.find_element(By.CSS_SELECTOR, "div.date")
       date = date_element.text
+      print(f"Raw Date String: {date}")
     except NoSuchElementException as e:
       print(f"Date: (element not found) {e}")
+      date = None
+
+    if date:
+      try:
+        date_part = ' '.join(date.split(' ')[1:])
+        event_date = datetime.strptime(date_part, "%d %B %Y, %H:%M")
+
+        day = event_date.day
+        month = event_date.month
+        year = event_date.year
+        
+        formatted_date_for_storage = event_date.isoformat()
+      except ValueError as e:
+         print(f"Error parsing date: {e}")
+         formatted_date_for_storage = day = month = year = None
+    else:
+      formatted_date_for_storage = day = month = year = None
 
     # Descriptions Scraper
     try:
@@ -76,14 +97,18 @@ def process_articles(articles, all_data):
     print("\n")
 
     # Fill the dictionary with the data
+    event_data = {
+      'img': img,
+      'title': title,
+      'date': formatted_date_for_storage,
+      'day': day,
+      'month': month,
+      'year': year,
+      'description': description,
+      'tag': tag
+    }
     
-    event_data['img'] = img
-    event_data['title'] = title
-    event_data['date'] = date
-    event_data['description'] = description
-    event_data['tag'] = tag
     print(event_data)
-
     all_data.append(event_data)  
 
 all_data = []
