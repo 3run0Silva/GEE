@@ -8,7 +8,7 @@ from .event import Event
 # FETCH ALL EVENTS
 class EventRepository:
 
-  def fetch_all_events(slef):
+  def fetch_all_events(self):
     db = get_db()
     documents = db.collection('Events').get()
     events = [Event(**doc.to_dict()) for doc in documents]
