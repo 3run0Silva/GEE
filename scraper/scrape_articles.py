@@ -14,13 +14,13 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Chrome
+# Chromedriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Firestore
 from api.config.database.db import get_db
 import warnings
-
+#!!!!!!!!error!!!!!!!!!!
 warnings.filterwarnings("ignore", message="Detected filter using positional arguments. Prefer using the 'filter' keyword argument instead.")
 
 
@@ -145,7 +145,7 @@ def process_articles(articles, all_data):
       all_data.append(event_data)  
 
     else:
-       print("Incomplete event data, wont be added to the database")
+       print("Some events have incomplete data there for wont be added to the database")
 
 # Cheking to verify if the document already exists in the DB
 def event_exists(db, title, date):

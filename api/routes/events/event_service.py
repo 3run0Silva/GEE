@@ -15,5 +15,5 @@ class EventService:
   def get_events_by_tag(self, event_tag):
     return self.event_repository.fetch_events_by_tag(event_tag)
 
-  def get_events_by_date(self, event_date):
-    return self.event_repository.fetch_events_by_date(event_date)
+  def get_events_by_date(self, day=None, month=None, year=None):
+    return self.event_repository.fetch_events_by_date(day, month, year)

@@ -1,5 +1,7 @@
 from config.database.db import get_db
 from .event import Event
+from datetime import datetime, timedelta
+import calendar
 
 ##################################################
 ################# DB ACCESS ######################
@@ -22,8 +24,16 @@ class EventRepository:
     return events
 
   # FETCH EVENTS BY {DATE}
-  def fetch_events_by_date(self, event_date):
+  def fetch_events_by_date(self, day=None, month=None, year=None):
     db = get_db()
-    query = db.collection('Events').where('date', '==', event_date).get()
-    events = [Event(**doc.to_dict()) for doc in query if doc.exists]
-    return events
+    query = db.collection('Events')
+
+    if day:
+        query = query.where('day', '==', day)
+    if month:
+        query = query.where('month', '==', month)
+    if year:
+        query = query.where('year', '==', year)
+
+    documents = query.get()
+    return [Event(**doc.to_dict()) for doc in documents]
