@@ -128,7 +128,7 @@ def process_articles(articles, all_data):
 
     print("\n")
 
-    # Fill the dictionary with the data
+    # Fill the dictionary with the data only if the data contains a title and date
     if title and date: 
       event_data = {
         'img': img,
@@ -145,7 +145,7 @@ def process_articles(articles, all_data):
       all_data.append(event_data)  
 
     else:
-       print("Some events have incomplete data there for wont be added to the database")
+       print("Some events have incomplete data therefor wont be added to the database")
 
 # Cheking to verify if the document already exists in the DB
 def event_exists(db, title, date):
