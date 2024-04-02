@@ -9,22 +9,21 @@ import calendar
 
 # FETCH ALL EVENTS
 class EventRepository:
-
-  def fetch_all_events(self):
+  def _fetch_all_events(self):
     db = get_db()
     documents = db.collection('Events').get()
     events = [Event(**doc.to_dict()) for doc in documents]
     return events
 
   # FETCH EVENTS BY {TAG}
-  def fetch_events_by_tag(self, event_tag):
+  def _fetch_events_by_tag(self, event_tag):
     db = get_db()
     query = db.collection('Events').where('tag', '==', event_tag).get()
     events = [Event(**doc.to_dict()) for doc in query if doc.exists]
     return events
 
   # FETCH EVENTS BY {DATE}
-  def fetch_events_by_date(self, day=None, month=None, year=None):
+  def _fetch_events_by_date(self, day=None, month=None, year=None):
     db = get_db()
     query = db.collection('Events')
 

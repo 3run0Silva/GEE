@@ -1,5 +1,6 @@
 class Event:
-    def __init__(self, img="", title="", date="", day=None, month=None, year=None, description="", tag=""):
+    def __init__(self, id="", img="", title="", date="", day=None, month=None, year=None, description="", tag=""):
+        self.id = id
         self.img = img
         self.title = title
         self.date = date

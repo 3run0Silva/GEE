@@ -8,7 +8,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from execptions.NotFoundException import NotFoundException
 
 # Status code handling (ERRORS)
-
 def error_handler(f):
   @wraps(f)
   def decorated_function(*args, **kwargs):
