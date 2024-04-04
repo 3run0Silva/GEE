@@ -9,6 +9,10 @@ body {
   margin: 2rem;
 }
 
+.filter_options {
+  text-align: center;
+}
+
 .row {
   margin: 0 0 !important;
 }

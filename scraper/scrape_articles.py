@@ -1,12 +1,12 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-
 import time
-from datetime import datetime
 import schedule
+from datetime import datetime
+from dateutil import parser
+import re
 import hashlib
-
 # Selenium
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -14,15 +14,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 # Chromedriver
 from webdriver_manager.chrome import ChromeDriverManager
-
 # Firestore
 from api.config.database.db import get_db
-from google.cloud.firestore_v1 import SERVER_TIMESTAMP
 import warnings
-#!!!!!!!!error!!!!!!!!!!
 warnings.filterwarnings("ignore", message="Detected filter using positional arguments. Prefer using the 'filter' keyword argument instead.")
 
 
@@ -97,22 +93,41 @@ def process_articles(articles, all_data):
     except NoSuchElementException as e:
       print(f"Date: (element not found) {e}")
       date = None
-    
-    if date:
-      try:
-        date_part = ' '.join(date.split(' ')[1:])
-        event_date = datetime.strptime(date_part, "%d %B %Y, %H:%M")
 
+    # Parsing date
+
+    def parse_event_date(date_str):
+      if 'From' in date_str and 'to' in date_str:
+        range_pattern = r"From (\d{1,2} \w+) to (\d{1,2} \w+)"
+        match = re.search(range_pattern, date_str)
+        if match:
+          start_date_str = match.group(1)
+          try:
+            current_year = datetime.now().year
+            start_date_str += f" {current_year}"
+            return parser.parse(start_date_str)
+          except ValueError:
+            return None
+      else:
+        date_str = re.sub(r"^\w+ ", "", date_str)
+        try:
+          return parser.parse(date_str)
+        except ValueError:
+          return None
+
+    if date:
+      event_date = parse_event_date(date)
+      if event_date:
         day = event_date.day
         month = event_date.month
         year = event_date.year
-        
         formatted_date_for_storage = event_date.isoformat()
-      except ValueError as e:
-        print(f"Error parsing date: {e}")
+      else:
+        print(f"Could not parse date: {date}")
         formatted_date_for_storage = day = month = year = None
     else:
       formatted_date_for_storage = day = month = year = None
+
 
     # Descriptions Scraper
     try:
@@ -125,6 +140,7 @@ def process_articles(articles, all_data):
     try:
         tag_element = article.find_element(By.CSS_SELECTOR, "p.tags")
         tag = tag_element.text
+        normalized_tag = tag.replace(" ", "_")
     except NoSuchElementException as e:
         print(f"Tag: (element not found) {e}")
 
@@ -140,7 +156,7 @@ def process_articles(articles, all_data):
         'month': month,
         'year': year,
         'description': description,
-        'tag': tag
+        'tag': normalized_tag
       }
     
       print(event_data)
