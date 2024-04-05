@@ -1,7 +1,6 @@
 from config.database.db import get_db
 from .event import Event
-from datetime import datetime, timedelta
-import calendar
+
 
 ##################################################
 ################# DB ACCESS ######################
