@@ -188,11 +188,11 @@ def save_data(all_data, db):
   for event_data in all_data:
     event_data['id'] = generate_event_id(event_data['title'], event_data['date'])
     if not event_exists(db, event_data['id']):
-      if event_data['date'] is not None:  # Check if date is not None
+      if event_data['date'] is not None:
         if not event_exists(db, event_data['id']):
           # Convert event date to Firestore Timestamp object
           event_date = datetime.strptime(event_data['date'], "%Y-%m-%dT%H:%M:%S")
-          event_data['date'] = event_date  # No need to convert to Firestore Timestamp
+          event_data['date'] = event_date
           db.collection('Events').add(event_data)
         else:
           print(f"Event with the ID of: {event_data['id']} already exists in the database")
