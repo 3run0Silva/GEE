@@ -1,4 +1,4 @@
-# EH
+# GEE API (Geneve Events)
 GEEvents
 Projet de cour python
 
@@ -75,7 +75,3 @@ Codes d’erreur communs :
 •	404 ( Not found )
 
 Le Frontend : vue que le projet de python vise plutôt le backend de l’application, j’ai fait un frontend en utilisent vanille javascript plus HTML et CSS/Bootstrap basic pour cette première phase du projet de cette forme on peut quand même teste notre API sans avoir besoin d’outils supplémentaire.
-
-
-
- ...
