@@ -1,4 +1,4 @@
-# EH
+# GEE (Geneve Events)
 GEEvents
 Projet de cour python
 
