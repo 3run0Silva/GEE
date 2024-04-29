@@ -1,4 +1,4 @@
-# GEE (Geneve Events)
+# GEE API (Geneve Events)
 GEEvents
 Projet de cour python
 
