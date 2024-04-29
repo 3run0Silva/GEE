@@ -1,77 +1,66 @@
-# GEE API (Geneve Events)
-GEEvents
-Projet de cour python
+# GEEvents Python Course Project
 
+Introduction:
 
+This application aims to provide users with information about events in Geneva in a simple and intuitive way. Such information is scattered across the web, requiring searches or prior knowledge of the event.
 
+Developer:
 
-Introduction :
+About this project:
 
-Cette application vise à amener à l’utilisateur de façon simple et intuitive l’information sur les évènements à Genève qui se trouve dispersé à travers le web et qui demande des recherches, ou même la connaissance préalable de l’évènement.
+This project uses an MVC architecture and utilizes the following technologies:
 
+Primary:
 
+Python
+Flask
+Selenium
+Firebase
+Secondary:
 
+HTML/CSS
+Bootstrap
+JavaScript
+Dependencies:
 
-Développeur / Développeuse
+Axios: $ npm install axios
+Flask-cors: $ pip install -u flask-cors
+Firebase-admin: $ pip install –user firebase-admin
+The idea of the project is to scrape the web for information about events in Geneva and store them in a NoSQL database (Firebase). Once the data is stored, an API is used to manage communication between the front and back ends. Finally, a simple front end allows users to query the database for event data.
 
+Project Environment:
 
-À propos de ce projet :
+[Docker?]
 
-Ce projet utilise une architecture MVC
-Ce projet a été conçue utilisent les technologies suivantes
-Principal :
-•	Python
-•	Flask
-•	Selenium
-•	Firebase
-Secondaires :
-•	HTML/CSS
-•	Bootstrap
-•	Javascript
-Dépendances :
-•	Axios : $ npm install axios
-•	Flask-cors : $ pip install -u flask-cors
-•	Firebase-admin : $ pip install –user firebase-admin
+API Documentation:
 
-L’ides du projet et tout simplement de scraper le web pour information sur les événements à Genève et les stocker sur une base de données NoSQL (Firebase), une fois les données stockées on utilise une API pour gérer la communication entre le front et le back, pour terminer un simple front qui perme a l’utilisateur de lance de requêtes ver la base de données pour avoir la data sur les événements 
+API ENDPOINTS:
 
+GET all events
+URL: /events
+Method: GET
+Parameters: None
+Response: List of all events.
+Example response: http://127.0.0.1:5000/events
+GET events by tag
+URL: /events/tag/
+Method: GET
+Parameters:
+tag (required): The tag of events to filter.
+Response: List of events filtered by tag.
+Example response: http://127.0.0.1:5000/events/tag/Dance
+GET events by date
+URL: /events/date?day=&month=&year=
+Method: GET
+Parameters:
+day, month, year (required): The date to filter.
+Response: List of events filtered by day, month, or year.
+Example response: http://127.0.0.1:5000/events/date?day=18&month=04&year=2024
+Error Handling:
 
-Environnent de projet :
+Common error codes:
 
-[Docker ?]
+404 (Not found)
+Frontend:
 
-
-Documentation de l’API :
-
-API ENDPOINTS :
-•	GET all events
-o	URL : /Events
-o	Méthode : GET
-o	Paramètres : Aucun
-o	Réponse : Liste de tous les événements.
-o	Example de réponse : http://127.0.0.1:5000/events
-
-•	GET events by tag
-o	URL : /Events/tag/<tag>
-o	Méthode : GET
-o	Paramètres :
-	`tag` (requis) : Le tag des événements à filtrer.
-o	Réponse : Liste des événements filtrés par tag.
-o	Example de réponse : http://127.0.0.1:5000/events/tag/Dance
-•	GET events by date
-o	URL : /Events/date ?day=<day>&month=<month>&year=<year>
-o	Méthode : GET
-o	Paramètres :
-	 `day`, `month`, `year`(requis) : La date à filtrer.
-o	Réponse : Liste des événements filtrés par jour, mois ou année.
-o	Example de réponse : http://127.0.0.1:5000/events/date?day=18&month=04&year=2024
-
-
-
-
-Gestion des erreurs : 
-
-Codes d’erreur communs :
-•	404 ( Not found )
-
-Le Frontend : vue que le projet de python vise plutôt le backend de l’application, j’ai fait un frontend en utilisent vanille javascript plus HTML et CSS/Bootstrap basic pour cette première phase du projet de cette forme on peut quand même teste notre API sans avoir besoin d’outils supplémentaire.
+Since the focus of the Python project is mainly on the backend, I've created a frontend using vanilla JavaScript along with HTML and basic CSS/Bootstrap for this initial phase of the project. This allows us to test our API without the need for additional tools.
