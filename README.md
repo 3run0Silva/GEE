@@ -11,16 +11,11 @@ About this project:
 This project uses an MVC architecture and utilizes the following technologies:
 
 Primary:
+Python, Flask, Selenium, Firebase
 
-Python
-Flask
-Selenium
-Firebase
 Secondary:
+HTML/CSS, Bootstrap, JavaScript
 
-HTML/CSS
-Bootstrap
-JavaScript
 Dependencies:
 
 Axios: $ npm install axios
