@@ -15,7 +15,7 @@ def serve_index():
 # app.config['JWT_SECRET_KEY'] = 'your-secret-key'
 # jwt = JWTManager(app)
 
-CORS(app, resources={r"/events/*": {"origins": "*"}})
+CORS(app, origins=['http://localhost:5173'])
 app.register_blueprint(event_blueprint, url_prefix='/events')
 # app.register_blueprint(login_blueprint, url_prefix='/login')
 
