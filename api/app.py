@@ -6,7 +6,7 @@ from flask_cors import CORS
 from routes.events.event_controller import event_blueprint
 # from routes.login.login_controller import login_blueprint
 
-app = Flask(__name__, static_folder='../frontend/static', template_folder='../frontend/templates')
+app = Flask(__name__)
 
 @app.route('/app/')
 def serve_index():
@@ -15,9 +15,9 @@ def serve_index():
 # app.config['JWT_SECRET_KEY'] = 'your-secret-key'
 # jwt = JWTManager(app)
 
-CORS(app, resources={r"/events/*": {"origins": "*"}})
+CORS(app, resources={r"/events*": {"origins": "*"}})
 app.register_blueprint(event_blueprint, url_prefix='/events')
 # app.register_blueprint(login_blueprint, url_prefix='/login')
 
 if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0', port=8080)
+  app.run(debug=True, host='0.0.0.0', port=8080, ssl_context='adhoc')
