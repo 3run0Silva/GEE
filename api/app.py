@@ -8,7 +8,7 @@ from routes.events.event_controller import event_blueprint
 
 app = Flask(__name__)
 
-cors = CORS(app, resources={r'*': {'origins': '*'}})
+cors = CORS(app, resources={r'/events/*': {'origins': '*'}})
 
 @app.route('/app/')
 def serve_index():
