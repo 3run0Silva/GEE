@@ -8,8 +8,6 @@ from routes.events.event_controller import event_blueprint
 
 app = Flask(__name__)
 
-cors = CORS(app, resources={r'/events/*': {'origins': '*'}})
-
 @app.route('/app/')
 def serve_index():
     return render_template('index.html')
@@ -17,6 +15,7 @@ def serve_index():
 # app.config['JWT_SECRET_KEY'] = 'your-secret-key'
 # jwt = JWTManager(app)
 
+cors = CORS(app, resources={r'*': {'origins': ['https://gee.bsilva.ch/']}})
 app.register_blueprint(event_blueprint, url_prefix='/events')
 # app.register_blueprint(login_blueprint, url_prefix='/login')
 
